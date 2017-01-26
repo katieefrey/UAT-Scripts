@@ -7,25 +7,25 @@ Only run UAT_SKOS_master.py, it will call the other scripts.  However, you can c
 Resulting files:
 
 1) A series of html files used to support both the hierarchical and alphabetical browers of the UAT
- #execfile("UAT_SKOS_to_html.py")
+execfile("UAT_SKOS_to_html.py")
 
 2) A CSV flatfile that displays the hierarchy of the thesaurus
- #execfile("UAT_SKOS_to_flatfile.py")
+execfile("UAT_SKOS_to_flatfile.py")
 
 3) A CSV file detailing all 'related to' links in the UAT
- #execfile("UAT_SKOS_to_related_list.py")
+execfile("UAT_SKOS_to_related_list.py")
 
 4) A json file with the structure of the UAT, used for the visual browser
- #execfile("UAT_SKOS_to_dendrogram.py")
+execfile("UAT_SKOS_to_dendrogram.py")
 
 5) Another json file with the UAT structure that also includes the sum of each terms child terms
- #execfile("UAT_SKOS_to_dendrogram-with-child-nums.py")
+execfile("UAT_SKOS_to_dendrogram-with-child-nums.py")
 
 6) A json file for use with the UAT API that lists all concepts
- #execfile("UAT_SKOS_to_json_flat_for_allconcepts_api.py")
+execfile("UAT_SKOS_to_json_flat_for_allconcepts_api.py")
 
 7) Three csv files, one of which is just a striaght list of all concepts in the UAT, the second is a straight list of all concepts with all alternative terms, and the third is a list of all concepts with their URIs.
- #execfile("UAT_SKOS_to_csv_lists.py")
+execfile("UAT_SKOS_to_csv_lists.py")
 
 8) A javascript file for use in the UAT autocomplete widget
- #execfile("UAT_SKOS_to_autocomplete.py")
+execfile("UAT_SKOS_to_autocomplete.py")
