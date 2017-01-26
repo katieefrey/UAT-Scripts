@@ -4,6 +4,7 @@ import os
 import json
 import shutil
 import rdflib
+import unicodedata
 import pandas as pd
 from datetime import datetime
 
@@ -13,8 +14,7 @@ timestamp = datetime.now().strftime("%Y_%m%d_%H%M")
 
 ##### RDF File Location #####
 ##### assign this variable to location of UAT SKOS-RDF file exported from VocBench ##### 
-rdf = "version1.rdf"
-#rdf = "uat-realigned-export-20150727.rdf"
+rdf = "UATv2.0.0.rdf"
 
 ##### Shared Functions and Variables #####
 ##### do NOT edit this section #####
@@ -25,12 +25,11 @@ g = rdflib.Graph()
 result = g.parse((rdf).encode('utf8'))
 
 #defines certain properties within the SKOS-RDF file
-litForm = rdflib.term.URIRef('http://www.w3.org/2008/05/skos-xl#literalForm')
-prefLabel = rdflib.term.URIRef('http://www.w3.org/2008/05/skos-xl#prefLabel')
+prefLabel = rdflib.term.URIRef('http://www.w3.org/2004/02/skos/core#prefLabel')
 broader = rdflib.term.URIRef('http://www.w3.org/2004/02/skos/core#broader')
 Concept = rdflib.term.URIRef('http://www.w3.org/2004/02/skos/core#Concept')
 vocstatus = rdflib.term.URIRef('http://art.uniroma2.it/ontologies/vocbench#hasStatus')
-altLabel = rdflib.term.URIRef('http://www.w3.org/2008/05/skos-xl#altLabel')
+altLabel = rdflib.term.URIRef('http://www.w3.org/2004/02/skos/core#altLabel')
 TopConcept = rdflib.term.URIRef('http://www.w3.org/2004/02/skos/core#topConceptOf')
 ednotes = rdflib.term.URIRef('http://www.w3.org/2004/02/skos/core#editorialNote')
 changenotes = rdflib.term.URIRef('http://www.w3.org/2004/02/skos/core#changeNote')
@@ -86,6 +85,9 @@ def getaltterms(term):
     except KeyError:
         pass           
 
+#for cco in alltopconcepts:
+#    print getaltterms(cco)
+
 #a function to get a list of all related terms for a term
 def getrelatedterms(term):
     terminal = rdflib.term.URIRef(term)
@@ -134,14 +136,7 @@ def getvocstatus(term):
 def lit(term):
     d = rdflib.term.URIRef(term)
     for prefterm in g.objects(subject=d, predicate=prefLabel):
-        for litterm in g.objects(subject=prefterm, predicate=litForm):
-            return litterm
-
-#a function to return the human readable form of the alternate version of a term
-def altlit(term):
-    d = rdflib.term.URIRef(term)
-    for altterm in g.objects(subject=d, predicate=litForm):
-        return altterm
+        return prefterm
 
 #returns a list of all deprecated terms in the file
 deprecated = []
@@ -166,20 +161,17 @@ def getallchilds(term, childlist):
 ##### comment out scripts you don't want to run at this time #####
 
 
-
-
-###############################################################
 print "\nCreating HTML files for the web browsers..."
 #execfile("UAT_SKOS_to_html.py")
-#working, 12/22/2015
+#working, 1/26/2017
 
 print "\nCreating CSV flatfile..."
 #execfile("UAT_SKOS_to_flatfile.py")
-#working, 12/22/2015
+#working, 1/26/2017
 
-print "\nCreating CSV flatfile..."
-#execfile("UAT_SKOS_to_flatfile_related.py")
-#working, 12/22/2015
+print "\nCreating 'related to' CSV flatfile..."
+#execfile("UAT_SKOS_to_related_list.py")
+#working, 1/26/2017
 
 print "\nCreating json file for dendrogram..."
 #execfile("UAT_SKOS_to_dendrogram.py")
@@ -191,14 +183,14 @@ print "\nCreating json file for dendrogram with child term nums..."
 
 print "\nCreating flat json file for all concepts API..."
 #execfile("UAT_SKOS_to_json_flat_for_allconcepts_api.py")
-#working, 12/22/2015
+#not working, 7/11/2016
 
 print "\nCreating flat list csv file..."
 #execfile("UAT_SKOS_to_csv_lists.py")
-#working, 12/22/2015
+#working, 1/26/2017
 
 print "\nCreating javascript for autocomplete..."
 #execfile("UAT_SKOS_to_autocomplete.py")
-#seems to be working
+#seems to be working, 7/11/2016
 
 print "\nFinished with all scripts!"

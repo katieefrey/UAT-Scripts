@@ -14,8 +14,7 @@ for iall in allconcepts:
         altlist= []
 
         for i in alternate:
-            lita = altlit(i)
-            altlist.append(lita)
+            altlist.append(i)
             alltermdict['altLabel'] = altlist
         alltermlist.append(alltermdict)
 

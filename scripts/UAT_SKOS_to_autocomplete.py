@@ -11,8 +11,7 @@ for t in allconcepts:
         pl.append(flat_j)
         
     else:
-        for x in p:
-            y = altlit(x)
+        for y in p:
             flat_j1 = '{value:"'+litt+'",label:"'+y+' ('+litt+')'+'"}'
             pl.append(flat_j1)
             

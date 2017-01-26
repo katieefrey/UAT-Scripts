@@ -28,37 +28,33 @@ class UnicodeWriter:
         for row in rows:
             self.writerow(row)
 
+resultFile3 = open("uat_list_with_uris"+timestamp+".csv",'wb')
 resultFile2 = open("uat_list"+timestamp+".csv",'wb')
 resultFile = open("uat_list_with_alts"+timestamp+".csv",'wb')
 
 wr = UnicodeWriter(resultFile,dialect='excel',quoting=csv.QUOTE_ALL)
 wr2 = UnicodeWriter(resultFile2,dialect='excel',quoting=csv.QUOTE_ALL)
+wr3 = UnicodeWriter(resultFile3,dialect='excel',quoting=csv.QUOTE_ALL)
 
 wr.writerow(["preferred term"]+["alternate terms"])
+wr3.writerow(["preferred term"]+["uri"])
 
 alltermlist = []
 for iall in allconcepts:
     alternate = getaltterms(iall)
-    #print alternate
     altlist = []
     if alternate != None:
         for i in alternate:
-            lita = altlit(i)
-            print lita
-            altlist.append(lita)
+            altlist.append(i)
     else:
         altlist = []
-    #print altlist
     lits = lit(iall)
     wr.writerow([lits]+altlist)
     wr2.writerow([lits])
+    wr3.writerow([lits]+[iall])
 
 resultFile.close()
 resultFile2.close()
+resultFile3.close()
 
 print "Finished. See uat_list"+timestamp+".csv and uat_list_with_alts"+timestamp+".csv"
-
-#print allterms()
-
-#    print iall
-#print allconcepts

@@ -87,10 +87,10 @@ for t in allconcepts:
     if usats != None:
         fileterm.write("<p><dt><i>Use For</i>:</dt>\n")
         usat = []
-        for uat in usats:
-            usat.append(unicode(altlit(uat)))
-        sat = sorted(usat)
-        for at in sat:
+        for at in usats:
+            #usat.append(unicode(getaltterms(uat)))
+        #sat = sorted(usat)
+        #for at in sat:
             fileterm.write("<dd>"+at.encode('utf-8')+"</dd>\n")
         fileterm.write("</p>\n")
 
@@ -194,9 +194,9 @@ def sortlist(unsortedlist):
         ustl.append(lit(t))
     x = sorted(ustl)
     for s in x:
-        for n in g.subjects(predicate=litForm, object=s):
-            for m in g.subjects(predicate=prefLabel, object=n):
-                sl.append(m)
+        for n in g.subjects(predicate=prefLabel, object=s):
+ 
+            sl.append(n)
     return sl
 
 #builds the formatted list of terms for the hierarchy browser
