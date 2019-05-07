@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<style type="text/css">
+  
+    .node {
+    cursor: pointer;
+  }
+
+  .overlay{
+      background-color:#EEE;
+  }
+   
+  .node circle {
+    fill: #fff;
+    stroke: steelblue;
+    stroke-width: 1.5px;
+  }
+   
+  .node text {
+    font-size:16px; 
+    font-family:sans-serif;
+  }
+   
+  .link {
+    fill: none;
+    stroke: #ccc;
+    stroke-width: 1.5px;
+  }
+
+  .templink {
+    fill: none;
+    stroke: red;
+    stroke-width: 3px;
+  }
+
+  textarea {
+    max-width: 290px;
+}
+
+  .ghostCircle.show{
+      display:block;
+  }
+
+  .ghostCircle, .activeDrag .ghostCircle{
+       display: none;
+  }
+  
+  .error{
+      color: red;
+  }
+
+
+</style>
+<script type="text/javascript" src="{{ url_for('static', filename='js/jquery-1.10.2.min.js') }}"></script>
+<script type="text/javascript" src="{{ url_for('static', filename='js/d3.v3.min.js') }}"></script>
+
+
+
+</head>
+<body onLoad="document.getElementById('opts').options[0].selected = 'selected';GenerateCode();">
+        <script type="text/javascript">
+        function DoDiff(){    
+           var root = getRoot();
+           var orig = getOrig();
+           var diffStr = difftree(orig, root);
+           downloadString(diffStr);
+        }
+
+         function AddNode(){
+             var nodeName = document.getElementById('newnode').value;
+             var errorDiv = document.getElementById('error');
+             while(errorDiv.firstChild != null){
+                 errorDiv.removeChild(errorDiv.firstChild);
+             }
+             if(!nodeName){
+                 return;
+             }else{
+                 addNode(nodeName,errorDiv);
+             }
+         }
+
+        function TestForm(){
+                 var root = getRoot();
+                 var orig = getOrig();
+                 var diffStr = difftree(orig, root);
+                 var url = '/email';
+                 var name = document.getElementById("first_name").value;
+                 var inst = document.getElementById("yourinst").value;
+                 var uremail = document.getElementById("youremail").value;
+                 var urnotes = document.getElementById("notes").value;
+            d3.xhr(url)
+            .header("Content-Type","application/x-www-form-urlencoded")
+            .post("testarg=Name: "+name+"\n"+"Instituion: "+inst+"\n"+"Email: "+uremail+"\n"+"Notes: "+urnotes+"\n\nDifference File:\n"+diffStr);
+        }
+
+        function checkform(theform){
+            var why = "";
+
+            if(theform.txtInput.value == ""){
+              why += "Robot Check code should not be empty.";
+              }
+            if(theform.txtInput.value != ""){
+              if(ValidCaptcha(theform.txtInput.value) == true){
+                why += "Thank you for your feedback!";
+                TestForm();
+                }
+              else{
+                why += "Robot Check code did not match.";
+                }
+              }
+              if(why != ""){
+                alert(why);
+                return false;
+                }
+        }
+
+        function ClearFields() {
+
+             document.getElementById("txtInput").value = "";
+        }
+        </script>
+
+  <div style="float:left;width:300px">
+  <h1>UAT Sorting Tool</h1>
+  Choose a branch of the UAT (v3.0.0)<font color="#DD0000">*</font>:<BR/>
+<select id = "opts">
+<option value="blank" selected="selected" disabled="disabled">   </option>
+<option value="uat">Unified Astronomy Thesaurus</option>
+<option value="astroproc">--Astrophysical Processes</option>
+<option value="cosmology">--Cosmology</option>
+<option value="exoplanets">--Exoplanet astronomy</option>
+<option value="gega">--Galactic and extragalactic astronomy</option>
+<option value="hea">--High energy astrophysics</option>
+<option value="intast">--Interdisciplinary astronomy</option>
+<option value="ism">--Interstellar medium</option>
+<option value="obsast">--Observational astronomy</option>
+<option value="solar">--Solar physics</option>
+<option value="solarsystem">--Solar system astronomy</option>
+<option value="stellar">--Stellar astronomy</option>
+  </select>
+<br/><br/>
+Add Concept: <br/>
+  <input type="text" id="newnode"/><input type="button" value="Add Node" onClick="AddNode()"/><div id="error"></div>
+    <br />
+    <hr>
+    <h3>Send Your Feedback</h3>
+    Changes made using the sorting tool will be automatically included in your feedback when you submit this form.<br/><br/>
+    <!--<form onSubmit="TestForm(); return false;" method="POST"> -->
+    <form name="review" METHOD="POST" onsubmit="checkform(this); return false;">
+    <table cellspacing=0 border=0 cellpadding=0>
+    <tr><td>Your Name:</td><td><input type="text" id="first_name"/></td></tr>
+    <tr><td>Your Institution:&nbsp;&nbsp;&nbsp;&nbsp;</td><td><input type="text" id="yourinst"/></td></tr>
+    <tr><td>Your Email:</td><td><input type="text" id="youremail"/></td></tr>
+  </table><br/>
+    Additional Notes/Comments:<br/><textarea cols="35" rows="5"  id="notes"/></textarea>
+    <br/><br/>
+    Robot Check<font color="#DD0000">*</font>:<br/>
+    <font color="#DD0000">Enter This Code >></font> <span id="txtCaptchaDiv" style="color:#000000"></span>
+<input type="hidden" id="txtCaptcha" /></label>
+<input type="text" name="txtInput" id="txtInput" size="15" />
+<br/><br/>
+    <input type="submit" value="Submit"> 
+    </form>
+ <font color="#DD0000">*</font><i>Required</i><br/>
+    <script type="text/javascript">
+    function GenerateCode(){
+    //Generates the captcha function
+    var a = Math.ceil(Math.random() * 9)+ "";
+    var b = Math.ceil(Math.random() * 9)+ "";
+    var c = Math.ceil(Math.random() * 9)+ "";
+    var d = Math.ceil(Math.random() * 9)+ "";
+    var e = Math.ceil(Math.random() * 9)+ "";
+
+    var code = a + b + c + d + e;
+    document.getElementById("txtCaptcha").value = code;
+    document.getElementById("txtCaptchaDiv").innerHTML = code;
+    }
+
+    // Validate the Entered input aganist the generated security code function
+    function ValidCaptcha(){
+    var str1 = removeSpaces(document.getElementById('txtCaptcha').value);
+    var str2 = removeSpaces(document.getElementById('txtInput').value);
+    if (str1 == str2){
+    ClearFields();
+    GenerateCode();
+    return true;
+    }else{
+    return false;
+    }
+    }
+
+// Remove the spaces from the entered and generated code
+function removeSpaces(string){
+return string.split(' ').join("");
+}
+</script>
+</div>
+
+<script type="text/javascript" src="{{ url_for('static', filename='js/dndTree.js') }}"></script>
+<script type="text/javascript" src="{{ url_for('static', filename='js/difftree.js') }}"></script>
+    <div id="tree-container"  style="float:right;"><div id="blank" width=100% style="float:center;"><span style="font-size: x-large;"><br><br><br>Please Read Completely Before Starting&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><br><br>
+    To make suggestions using this tool...<br><br>
+    1) Select a branch of the UAT from the Dropdown<BR>
+    Menu on the left.<br><br>
+    2) Click on nodes and drag and drop them to a new<br>
+    location within the UAT tree.<br><br>
+    3) New concepts may be added using the input box at<br>
+    the far left and clicking the “Add Node” button.<br><br>
+    4) To indicate that a concept should be deleted, drag<br>
+    it to the “orphans” node.<br><br>
+    A log of changes made using the sorting tool will be<BR>
+    automatically included in feedback when the "Submit"<br>
+    button is clicked.<br><br>
+    <b>Refreshing or navigating away from the<BR>
+    page will cause all work to be lost.</B></div></div>
+
+   </div>
+  </body>
+</html>

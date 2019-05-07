@@ -1,0 +1,170 @@
+body {
+	background-color: #fafafa;
+	overflow-x: hidden;
+} 
+
+table.header {
+	position: relative;
+    z-index: 50;
+	top: -09px;
+	width: 90%;
+	margin-left:5%;
+	height: 65px;
+	border-spacing: 0px;
+    border-collapse: separate;
+	padding: 0px;
+	font-family: Arial, Helvetica, sans-serif;
+}
+
+table.search {
+	position: relative;
+	top: -10px;
+	width: 90%;
+	margin-left:5%;
+	border-spacing: 0px;
+    border-collapse: separate;
+	padding: 0px;
+	font-family: Arial, Helvetica, sans-serif;
+}
+
+table.search td {
+	vertical-align: top;
+	text-align: left;
+}
+
+table.topbox {
+    position: relative;
+    top: -30px;
+    width: 90%;
+    margin-left:5%;
+    border-spacing: 0px;
+    border-collapse: separate;
+    padding: 0px;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+table.topbox td {
+    vertical-align: top;
+    text-align: left;
+}
+
+table.info {
+	width: 228px;
+	border-spacing: 0px;
+    border-collapse: separate;
+	padding: 0px;
+	font-family: Arial, Helvetica, sans-serif;
+}
+
+table.data {
+	position: relative;
+	top: -50px;
+	width: calc(90% - 390px);
+	margin-left:5%;
+	font-family: Arial, Helvetica, sans-serif;
+}
+
+table.data th {
+	text-align: left;
+	background-color: #ffffff;
+}
+
+table.data tr:nth-child(odd) td {
+	background-color: #efefef;
+}
+
+table.data tr:nth-child(even) td {
+	background-color: #d7d7d7;
+}
+
+table.data th, td {
+	padding: 5px;
+}
+
+table.logo {
+    text-align: right;
+}
+
+h1 {
+	font-family: Arial, Helvetica, sans-serif;
+}
+
+
+h3 {
+	position: relative;
+	left: 5%;
+	width: 80%;
+	font-family: Arial, Helvetica, sans-serif;
+}
+
+h4 {
+    display: block;
+    text-align: center;
+    font-size: 1.17em;
+    margin-top: 0em;
+    margin-bottom: 0em;
+    left: 5%;
+    margin-right: 0;
+    font-weight: bold;
+
+}
+
+p.foot {
+	font-family: Arial, Helvetica, sans-serif;
+	position: relative;
+	top: 0px;
+    margin-bottom: 0em;
+}
+
+p.help {
+    font-family: Arial, Helvetica, sans-serif;
+    position: relative;
+    margin-left: 30px;
+    margin-top: 0em;
+    top: -20px;
+}
+
+p.info {
+	font-family: Arial, Helvetica, sans-serif;
+	position: relative;
+	display: block;
+    margin-top: 0em;
+    margin-bottom: 0em;
+    margin-right: 0;
+    padding: 0;
+	left: 5%;
+}
+
+p.search {
+	font-family: Arial, Helvetica, sans-serif;
+	position: relative;
+}
+
+a, a:link, a:visited{
+	color: #B4083A;
+	text-decoration: underline;
+}
+
+a:hover, a:active {
+	text-decoration: none;
+}
+
+#categoryHierarchy {
+    position: absolute;
+    background-color: #fafafa;
+    display: block;
+    top: 100px;
+    height: 450px;
+    z-index: 50;
+    right: 10px;
+}
+
+#categoryHierarchy2 {
+    position: absolute;
+    background-color: #fafafa;
+    display: block;
+    top: 0px;
+    height: calc(100% - 5px);
+    z-index: 30;
+    right: 10px;
+}
