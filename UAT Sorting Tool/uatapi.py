@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 #python default packages
+import os
 import sys
 import re
 import urllib2
@@ -18,6 +19,8 @@ from flask import jsonify
 import smtplib
 from email.mime.text import MIMEText
 
+import logging
+from logging.handlers import RotatingFileHandler
 
 app = Flask(__name__, static_folder='static', static_url_path='')
 
@@ -44,8 +47,8 @@ def send_tc():
 def emailchanges():
     val = request.form['testarg']
     msg = MIMEText(val)
-    me = '' # TO email address
-    you = '' # FROM email address
+    me = os.environ['NOTIFY_FROM'] # FROM email address
+    you = os.environ['NOTIFY_TO'] # TO email address
     msg['Subject'] = 'Suggestions from Sorting Tool'
     msg['From'] = me
     msg['To'] = you
@@ -55,16 +58,29 @@ def emailchanges():
     #s = smtplib.SMTP('127.0.0.1:1025')
     
     #Live Info
-    s = smtplib.SMTP()
-    s.connect() # 'mailserver, port'
-    s.login()# 'username, password'
-    
+    app.logger.info('Connecting to SMTP server %s',os.environ['SMTP_SERVER'])
+
+    s = smtplib.SMTP_SSL()
+    s.connect(os.environ['SMTP_SERVER'],465) # 'mailserver, port'
+    s.login(os.environ['SMTP_USER'],os.environ['SMTP_PASS'])# 'username, password'
+
     #Test & Live
     s.sendmail(me, [you], msg.as_string())
     s.quit()
 
-    #return 'Email sent'
+    return 'Email sent'
 
 if __name__ == '__main__':
-    app.run()
+    # set up logging handler
+    formatter = logging.Formatter(
+        "[%(asctime)s] {%(pathname)s:%(lineno)d} %(levelname)s - %(message)s")
+    handler = RotatingFileHandler('app.log', maxBytes=10000, backupCount=2)
+    handler.setLevel(logging.INFO)
+    handler.setFormatter(formatter)
+    app.logger.addHandler(handler)
+    app.logger.setLevel(logging.INFO)
+
+
+    # run app
+    app.run(host='0.0.0.0')
 
