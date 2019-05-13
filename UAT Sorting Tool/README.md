@@ -5,6 +5,7 @@
 - application code dockerised
 - SMTP parameters pulled in through environment variables (removes them from the application code)
 - app extended with basic logging to file `/app.log`
+- optional docker-compose.yml added and Readme updated with detailed instructions for using docker or docker-compose.
 
 ## Usage
 First, reate a '.env' file from the sample provided:
@@ -116,7 +117,7 @@ Edit .env to remove the password
 SMTP_PASS=dummy
 ...
 ```
-Edit `docker-compose.yml` to add an `environment` section undermeath the env-file specification, which will supercede any variables configured in the .env file with the value of the environment variable on the docker host.
+Edit `docker-compose.yml` to add an `environment` section underneath the env-file specification, which will supercede any variables configured in the .env file with the value of the environment variable on the docker host.
 ```
      env_file:
       - .env
