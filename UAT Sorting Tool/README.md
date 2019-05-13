@@ -8,7 +8,7 @@
 - optional docker-compose.yml added and Readme updated with detailed instructions for using docker or docker-compose.
 
 ## Usage
-First, reate a '.env' file from the sample provided:
+First, create a '.env' file from the sample provided:
 ```
 cp .env-sample .env
 ```
