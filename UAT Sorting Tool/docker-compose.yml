@@ -1,0 +1,10 @@
+version: '3'
+services:
+  sorter2:
+     image: docker-registry.iop.org/iopana-sortingtool-app:latest
+     ports:
+      - "5000:5000"
+     env_file:
+      - .env
+     environment:
+      - SMTP_PASS
