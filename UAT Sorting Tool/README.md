@@ -1,5 +1,4 @@
 # Sorting Tool
-=============
 
 ### Changelog
 - application code dockerised
