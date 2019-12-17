@@ -1,3 +1,9 @@
+### Archiving Repo
+
+12/17/2019: I am archiving this repo today and seperating the (udapted) content from this repo into different repos. 
+
+-----
+
 Updated 5/9/2017 to UAT v2.0.0
 
 Various scripts, bits, and pieces for the Unified Astronomy Thesaurus.
