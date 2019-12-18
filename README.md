@@ -2,8 +2,8 @@
 
 12/17/2019: I am archiving this repo and seperating the (udapted) content from this repo into different repos. 
 
-Sorting Tool --> https://github.com/astrothesaurus/sorting-tool
-UAT Scripts --> https://github.com/astrothesaurus/release-prep/tree/master/transformations
+* Sorting Tool --> https://github.com/astrothesaurus/sorting-tool
+* UAT Scripts --> https://github.com/astrothesaurus/release-prep/tree/master/transformations
 
 -----
 
